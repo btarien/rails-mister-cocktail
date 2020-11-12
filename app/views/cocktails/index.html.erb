@@ -4,17 +4,17 @@
     <div class="row no-gutters">
       <% cocktails.each do |cocktail| %>
         <div class="col-4">
-          <div class="card m-1 border-0">
-            <img class="card-img" src="<%= cocktail.image_url %>" alt="cocktail image">
-            <div class="card-img-overlay text-center d-flex flex-column justify-content-center align-items-center">
-              <h5 class="card-title"><%= link_to cocktail.name, cocktail_path(cocktail), :style=> 'color: white;' %></h5>
+          <%= link_to cocktail_path(cocktail) do %>
+            <div class="card m-1 border-0">
+              <img class="card-img" src="<%= cocktail.image_url %>" alt="cocktail image">
+              <div class="card-img-overlay text-center d-flex flex-column justify-content-center align-items-center">
+                <h5 class="card-title text-light title"><%= cocktail.name %></h5>
+              </div>
             </div>
-          </div>
+          <% end %>
         </div>
       <% end %>
     </div>
   <% end %>
 </div>
-
-<%= link_to 'Add New Cocktail', new_cocktail_path %>
 

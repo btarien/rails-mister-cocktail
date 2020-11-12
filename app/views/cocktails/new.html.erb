@@ -1,6 +1,6 @@
 <h1>Add New Cocktail</h1>
 
-<%= simple_form_for(@cocktail) do |f| %>
+<%= simple_form_for @cocktail, html: { class: "text-light"} do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
