@@ -1,0 +1,27 @@
+<h1><%= @cocktail.name %></h1>
+<div class="description">
+  <h2>Description</h2>
+</div>
+<div class="ingredients">
+  <h2>Ingredients</h2>
+  <ul>
+    <% @cocktail.doses.each do |dose| %>
+      <li>
+        <%= dose.description %> of <%= dose.ingredient.name %>
+        <%= link_to 'delete', dose_path(dose), method: :delete, data: { confirm: "Are you sure?" } %>
+        </li>
+    <% end %>
+  </ul>
+
+  <h3>Add New Dose</h3>
+
+  <%= simple_form_for [@cocktail, @dose] do |f| %>
+    <%= f.error_notification %>
+    <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+    <%= f.input :description %>
+    <%= f.association :ingredient %>
+    <%= f.button :submit, class: "btn btn-primary"%>
+  <% end %>
+</div>
+<%= link_to 'back', cocktails_path %>
