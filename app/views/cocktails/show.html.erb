@@ -1,27 +1,31 @@
 <h1><%= @cocktail.name %></h1>
-<div class="description text-light">
-  <h2>Description</h2>
-</div>
-<div class="ingredients text-light">
-  <h2>Ingredients</h2>
-  <ul>
-    <% @cocktail.doses.each do |dose| %>
-      <li>
-        <%= dose.description %> of <%= dose.ingredient.name %>
-        <%= link_to 'delete', dose_path(dose), method: :delete, data: { confirm: "Are you sure?" } %>
-        </li>
+<div class="d-flex mt-5 justify-content-center">
+  <div class="text-light m-3 d-flex flex-column justify-content-between">
+    <div>
+      <h2>Ingredients</h2>
+      <ul>
+        <% @cocktail.doses.each do |dose| %>
+          <li>
+            <%= dose.description %> of <%= dose.ingredient.name %>
+            <%= link_to 'delete', dose_path(dose), method: :delete, data: { confirm: "Are you sure?" } %>
+            </li>
+        <% end %>
+      </ul>
+    </div>
+    <div>
+      <%= link_to 'back', cocktails_path %>
+    </div>
+  </div>
+  <div class="text-light m-3">
+    <h3>Add Ingredient</h3>
+
+    <%= simple_form_for [@cocktail, @dose] do |f| %>
+      <%= f.error_notification %>
+      <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+      <%= f.input :description %>
+      <%= f.association :ingredient %>
+      <%= f.button :submit, class: "btn btn-primary"%>
     <% end %>
-  </ul>
-
-  <h3>Add New Dose</h3>
-
-  <%= simple_form_for [@cocktail, @dose] do |f| %>
-    <%= f.error_notification %>
-    <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
-
-    <%= f.input :description %>
-    <%= f.association :ingredient %>
-    <%= f.button :submit, class: "btn btn-primary"%>
-  <% end %>
+  </div>
 </div>
-<%= link_to 'back', cocktails_path %>

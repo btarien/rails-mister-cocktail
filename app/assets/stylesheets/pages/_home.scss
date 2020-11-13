@@ -1,4 +1,6 @@
 // Specific CSS for your home-page
+@import url('https://fonts.googleapis.com/css2?family=Oswald&display=swap');
+
 body {
   background: #1a1a1a;
 }
@@ -10,4 +12,14 @@ h1 {
 
 .title {
   text-shadow: -0.5px -0.5px 0 #000;
+}
+
+h5 {
+  font-family: 'Oswald', sans-serif;
+}
+
+.card:hover {
+  .card-img {
+    filter: brightness(50%);
+  }
 }

@@ -10,7 +10,6 @@ ingredients = JSON.parse(open('https://www.thecocktaildb.com/api/json/v1/1/list.
 ingredients.each do |ingredient|
   Ingredient.create!(name: ingredient['strIngredient1'])
 end
-puts Ingredient.all
 
 puts 'adding cocktails...'
 10.times do
@@ -25,6 +24,21 @@ puts 'adding cocktails...'
     content_type: 'application/jpeg'
   )
   cocktail.save!
+
+  puts 'adding doses...'
+  15.times do |index|
+    ingredient = data["strIngredient#{index + 1}"]
+    ingredient = Ingredient.find_by(name: ingredient)
+    break if ingredient.nil?
+
+    dose_desc = data["strMeasure#{index + 1}"]
+    dose_desc = 'a dash' if dose_desc.nil?
+    dose = Dose.new(description: dose_desc)
+    dose.ingredient = ingredient
+    dose.cocktail = cocktail
+    dose.save!
+    puts dose
+  end
 end
 
 puts Cocktail.all
