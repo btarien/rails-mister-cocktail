@@ -14,11 +14,17 @@ puts Ingredient.all
 
 puts 'adding cocktails...'
 10.times do
-  cocktail = JSON.parse(open('https://www.thecocktaildb.com/api/json/v1/1/random.php').read)['drinks'][0]
-  Cocktail.create!(
-    name: cocktail['strDrink'],
-    image_url: cocktail['strDrinkThumb']
+  data = JSON.parse(open('https://www.thecocktaildb.com/api/json/v1/1/random.php').read)['drinks'][0]
+  cocktail = Cocktail.new(
+    name: data['strDrink']
   )
+  image = URI.open(data['strDrinkThumb'])
+  cocktail.image.attach(
+    io: image,
+    filename: "#{data['strDrink']}.jpeg",
+    content_type: 'application/jpeg'
+  )
+  cocktail.save!
 end
 
 puts Cocktail.all
